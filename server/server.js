@@ -4,6 +4,8 @@ var request = require('request');
 const cors = require('cors');
 require('dotenv').config();
 const axios = require('axios');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
 
 
@@ -11,10 +13,13 @@ const axios = require('axios');
 app.use(express.json());
 app.use(cors());
 
-const url = "https://api.sportmonks.com/v3/my/leagues?api_token=f93ggkCdVGTfSMMPHbDHQZ0qqOVS1Bpjs1kuUoPUIX0LZUb2NjgF6unrlBx0&include="
+
+const smKey = process.env.SM_KEY;
+
+const url = "https://api.sportmonks.com/v3/my/leagues?api_token=" + smKey + "&include="
 
 
-//f93ggkCdVGTfSMMPHbDHQZ0qqOVS1Bpjs1kuUoPUIX0LZUb2NjgF6unrlBx0
+
 
 const MLBStatsAPI = require('mlb-stats-api');
 const mlbStats = new MLBStatsAPI();
