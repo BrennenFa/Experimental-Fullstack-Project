@@ -2,46 +2,49 @@ const express = require('express')
 const app = express()
 var request = require('request');
 const cors = require('cors');
+require('dotenv').config();
+const axios = require('axios');
+
+
 
 
 app.use(express.json());
 app.use(cors());
 
+const url = "https://api.sportmonks.com/v3/my/leagues?api_token=f93ggkCdVGTfSMMPHbDHQZ0qqOVS1Bpjs1kuUoPUIX0LZUb2NjgF6unrlBx0&include="
 
 
-// replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
-var choice = 'AAPL';
-var url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + choice + '&interval=5min&apikey=THMC1AF24O40VSDX';
-// THMC1AF24O40VSDX
-console.log("AAAA")
+//f93ggkCdVGTfSMMPHbDHQZ0qqOVS1Bpjs1kuUoPUIX0LZUb2NjgF6unrlBx0
 
-app.post("/submit", (req, res) => {
-    console.log()
-    const { ticker } = req.body;
+const MLBStatsAPI = require('mlb-stats-api');
+const mlbStats = new MLBStatsAPI();
 
-    console.log('Received ticker:', ticker);
-    res.send('Message received successfully');
-    
-  
-});
+axios.get(url)
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.error('Error:', error.message);
+    });
 
-
-app.get("/a", (req, res) => {
+app.get("/data", (req, res) => {
 
 
     request.get({
         url: url,
         json: true,
         headers: {'User-Agent': 'request'}
-    }, (err, res, data) => {
+    }, (err, response, data) => {
         if (err) {
             console.log('Error:', err);
-        } else if (res.statusCode !== 200) {
-            console.log('Status:', res.statusCode);
+        } else if (response.statusCode !== 200) {
+            console.log('Status:', response.statusCode);
         } else {
             console.log(data)
+            res.json(data)
         }
     });
+    
 });
 
 

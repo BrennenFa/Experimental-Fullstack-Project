@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "mlb-stats-api": "^1.11.0"
   }
 }
